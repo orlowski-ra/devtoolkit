@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevToolkit - Free Developer Utilities</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                    <rect width="32" height="32" rx="8" fill="#6366f1"/>
+                    <path d="M8 12L12 16L8 20" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M16 20H24" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <h1>DevToolkit</h1>
+            </div>
+            <p class="tagline">Essential utilities for developers. Free. Fast. No ads.</p>
+        </header>
+
+        <nav class="tool-nav">
+            <button class="nav-btn active" data-tool="json">JSON Formatter</button>
+            <button class="nav-btn" data-tool="base64">Base64</button>
+            <button class="nav-btn" data-tool="url">URL Encode</button>
+            <button class="nav-btn" data-tool="markdown">Markdown</button>
+            <button class="nav-btn" data-tool="colors">Colors</button>
+        </nav>
+
+        <!-- JSON Formatter -->
+        <div class="tool-panel active" id="json-panel">
+            <div class="tool-header">
+                <h2>JSON Formatter & Validator</h2>
+                <div class="tool-actions">
+                    <button class="btn-secondary" onclick="formatJSON()">Format</button>
+                    <button class="btn-secondary" onclick="minifyJSON()">Minify</button>
+                    <button class="btn-primary" onclick="copyOutput('json-output')">Copy</button>
+                    <button class="btn-danger" onclick="clearAll('json-input', 'json-output')">Clear</button>
+                </div>
+            </div>
+            <div class="editor-container">
+                <div class="editor-box">
+                    <label>Input</label>
+                    <textarea id="json-input" placeholder="Paste your JSON here...&#10;{&#10;  \"name\": \"DevToolkit\",&#10;  \"version\": \"1.0\"&#10;}"></textarea>
+                </div>
+                <div class="editor-box">
+                    <label>Output</label>
+                    <pre id="json-output" class="output-area"></pre>
+                </div>
+            </div>
+            <div id="json-error" class="error-message"></div>
+        </div>
+
+        <!-- Base64 -->
+        <div class="tool-panel" id="base64-panel">
+            <div class="tool-header">
+                <h2>Base64 Encoder/Decoder</h2>
+                <div class="tool-actions">
+                    <button class="btn-secondary" onclick="encodeBase64()">Encode →</button>
+                    <button class="btn-secondary" onclick="decodeBase64()">← Decode</button>
+                    <button class="btn-danger" onclick="clearAll('base64-input', 'base64-output')">Clear</button>
+                </div>
+            </div>
+            <div class="editor-container">
+                <div class="editor-box">
+                    <label>Text</label>
+                    <textarea id="base64-input" placeholder="Enter text to encode..."></textarea>
+                </div>
+                <div class="editor-box">
+                    <label>Base64</label>
+                    <textarea id="base64-output" placeholder="Base64 result..."></textarea>
+                </div>
+            </div>
+            <div id="base64-error" class="error-message"></div>
+        </div>
+
+        <!-- URL Encoder -->
+        <div class="tool-panel" id="url-panel">
+            <div class="tool-header">
+                <h2>URL Encoder/Decoder</h2>
+                <div class="tool-actions">
+                    <button class="btn-secondary" onclick="encodeURL()">Encode →</button>
+                    <button class="btn-secondary" onclick="decodeURL()">← Decode</button>
+                    <button class="btn-danger" onclick="clearAll('url-input', 'url-output')">Clear</button>
+                </div>
+            </div>
+            <div class="editor-container">
+                <div class="editor-box">
+                    <label>Plain Text</label>
+                    <textarea id="url-input" placeholder="https://example.com/path?query=value"></textarea>
+                </div>
+                <div class="editor-box">
+                    <label>Encoded</label>
+                    <textarea id="url-output" placeholder="Encoded result..."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Markdown Preview -->
+        <div class="tool-panel" id="markdown-panel">
+            <div class="tool-header">
+                <h2>Markdown Preview</h2>
+                <div class="tool-actions">
+                    <button class="btn-secondary" onclick="copyOutput('markdown-html')">Copy HTML</button>
+                    <button class="btn-danger" onclick="clearAll('markdown-input', 'markdown-preview')">Clear</button>
+                </div>
+            </div>
+            <div class="editor-container">
+                <div class="editor-box">
+                    <label>Markdown</label>
+                    <textarea id="markdown-input" placeholder="# Hello World&#10;&#10;Write **markdown** here...&#10;&#10;- List item 1&#10;- List item 2&#10;&#10;```js&#10;const code = 'works';&#10;```"></textarea>
+                </div>
+                <div class="editor-box">
+                    <label>Preview</label>
+                    <div id="markdown-preview" class="output-area markdown-preview"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Color Tools -->
+        <div class="tool-panel" id="colors-panel">
+            <div class="tool-header">
+                <h2>Color Contrast Checker</h2>
+                <p class="tool-desc">Check WCAG contrast ratios for accessibility</p>
+            </div>
+            <div class="color-tool">
+                <div class="color-inputs">
+                    <div class="color-group">
+                        <label>Background</label>
+                        <div class="color-picker-wrapper">
+                            <input type="color" id="bg-color" value="#ffffff" onchange="updateContrast()">
+                            <input type="text" id="bg-color-text" value="#ffffff" onchange="updateColorFromText('bg')">
+                        </div>
+                    </div>
+                    <div class="color-group">
+                        <label>Text Color</label>
+                        <div class="color-picker-wrapper">
+                            <input type="color" id="text-color" value="#000000" onchange="updateContrast()">
+                            <input type="text" id="text-color-text" value="#000000" onchange="updateColorFromText('text')">
+                        </div>
+                    </div>
+                </div>
+                <div class="preview-box" id="contrast-preview">
+                    <p>The quick brown fox jumps over the lazy dog.</p>
+                    <span class="preview-label">Preview</span>
+                </div>
+                <div class="contrast-results">
+                    <div class="contrast-ratio">
+                        <span class="ratio-label">Contrast Ratio</span>
+                        <span class="ratio-value" id="contrast-ratio">21:1</span>
+                    </div>
+                    <div class="wcag-badges">
+                        <div class="badge" id="wcag-aa-normal">
+                            <span class="badge-label">AA Normal</span>
+                            <span class="badge-status pass">✓ Pass</span>
+                        </div>
+                        <div class="badge" id="wcag-aa-large">
+                            <span class="badge-label">AA Large</span>
+                            <span class="badge-status pass">✓ Pass</span>
+                        </div>
+                        <div class="badge" id="wcag-aaa-normal">
+                            <span class="badge-label">AAA Normal</span>
+                            <span class="badge-status pass">✓ Pass</span>
+                        </div>
+                        <div class="badge" id="wcag-aaa-large">
+                            <span class="badge-label">AAA Large</span>
+                            <span class="badge-status pass">✓ Pass</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Made with ❤️ for developers | <a href="https://github.com/yourusername/devtoolkit">Star on GitHub</a> | <a href="#">Support this project</a></p>
+        </footer>
+    </div>
+
+    <div id="toast" class="toast"></div>
+    <script src="app.js"></script>
+</body>
+</html>

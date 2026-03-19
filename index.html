@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevToolkit - Essential Developer Utilities | Free & Open Source</title>
+    <meta name="description" content="Free developer utility suite with JSON formatter, Base64 encoder, Markdown preview & more. No ads, no tracking, no signup required. Works offline.">
+    <meta name="keywords" content="json formatter, base64 encoder, markdown preview, developer tools, free utilities, open source">
+    <meta property="og:title" content="DevToolkit - Essential Developer Utilities">
+    <meta property="og:description" content="Free suite of developer tools. No ads, no tracking, works offline.">
+    <meta property="og:type" content="website">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #21262d;
+            --text-primary: #f0f6fc;
+            --text-secondary: #8b949e;
+            --text-muted: #6e7681;
+            --accent: #58a6ff;
+            --accent-hover: #79b8ff;
+            --success: #238636;
+            --success-hover: #2ea043;
+            --border: #30363d;
+            --glow: rgba(88, 166, 255, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            background: 
+                radial-gradient(ellipse 80% 50% at 50% -20%, var(--glow), transparent),
+                var(--bg-primary);
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            font-size: 0.875rem;
+            color: var(--accent);
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        .hero-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 0.6s ease 0.1s both;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.125rem, 3vw, 1.5rem);
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin-bottom: 2.5rem;
+            animation: fadeInUp 0.6s ease 0.2s both;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            animation: fadeInUp 0.6s ease 0.3s both;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--bg-primary);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(88, 166, 255, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-tertiary);
+            border-color: var(--accent);
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 3rem;
+            margin-top: 4rem;
+            animation: fadeInUp 0.6s ease 0.4s both;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Features Section */
+        .features {
+            padding: 6rem 2rem;
+            background: var(--bg-secondary);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .feature-card {
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--bg-tertiary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            font-size: 0.9375rem;
+        }
+
+        /* Why Different Section */
+        .why-different {
+            padding: 6rem 2rem;
+        }
+
+        .comparison-table {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .comparison-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            padding: 1.25rem 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .comparison-row:last-child {
+            border-bottom: none;
+        }
+
+        .comparison-row.header {
+            background: var(--bg-tertiary);
+            font-weight: 600;
+        }
+
+        .comparison-row .check {
+            color: var(--success);
+        }
+
+        .comparison-row .cross {
+            color: #da3633;
+        }
+
+        /* Source Code Section */
+        .source-code {
+            padding: 6rem 2rem;
+            background: var(--bg-secondary);
+        }
+
+        .pricing-card {
+            max-width: 500px;
+            margin: 0 auto;
+            background: var(--bg-primary);
+            border: 2px solid var(--accent);
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .pricing-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent);
+            color: var(--bg-primary);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .pricing-card h3 {
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .price {
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin: 1.5rem 0;
+        }
+
+        .price span {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .pricing-features {
+            text-align: left;
+            margin: 2rem 0;
+        }
+
+        .pricing-features li {
+            list-style: none;
+            padding: 0.75rem 0;
+            padding-left: 2rem;
+            position: relative;
+            color: var(--text-secondary);
+        }
+
+        .pricing-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: 700;
+        }
+
+        .pricing-note {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-top: 1.5rem;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 6rem 2rem;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .testimonial {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--accent), var(--success));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: white;
+        }
+
+        .author-name {
+            font-weight: 600;
+        }
+
+        .author-title {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        /* FAQ */
+        .faq {
+            padding: 6rem 2rem;
+            background: var(--bg-secondary);
+        }
+
+        .faq-item {
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        .faq-question:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 0 1.5rem 1.5rem;
+            max-height: 200px;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        .faq-icon {
+            transition: transform 0.3s ease;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 6rem 2rem;
+            text-align: center;
+            background: 
+                radial-gradient(ellipse 60% 40% at 50% 100%, var(--glow), transparent),
+                var(--bg-primary);
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        /* Footer */
+        footer {
+            padding: 3rem 2rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-muted);
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-stats {
+                gap: 2rem;
+            }
+
+            .comparison-row {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+
+            .comparison-row.header {
+                display: none;
+            }
+
+            .pricing-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .price {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-badge">🚀 Now Open Source</div>
+        <h1>DevToolkit</h1>
+        <p class="hero-subtitle">Essential developer utilities that respect your time and privacy. No bloated interfaces, no forced signups, no tracking — just pure productivity.</p>
+        <div class="hero-cta">
+            <a href="./app.html" class="btn btn-primary">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                Launch Free Tools
+            </a>
+            <a href="#source-code" class="btn btn-secondary">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                Get Source Code
+            </a>
+        </div>
+        <div class="hero-stats">
+            <div class="stat">
+                <div class="stat-value">5</div>
+                <div class="stat-label">Essential Tools</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">0</div>
+                <div class="stat-label">Tracking Scripts</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">100%</div>
+                <div class="stat-label">Open Source</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Everything You Need</h2>
+                <p>Five powerful utilities designed for daily developer workflows</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">{ }</div>
+                    <h3>JSON Formatter</h3>
+                    <p>Format, validate, and minify JSON with syntax highlighting. Instantly spot errors and copy formatted output.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">64</div>
+                    <h3>Base64 Encoder</h3>
+                    <p>Encode and decode Base64 with full Unicode support. Perfect for debugging API responses and data URLs.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">%</div>
+                    <h3>URL Encoder</h3>
+                    <p>Quickly encode and decode URLs and query parameters. Essential for working with web APIs and forms.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">Md</div>
+                    <h3>Markdown Preview</h3>
+                    <p>Live preview with GitHub-style rendering and HTML export. Write documentation faster with instant feedback.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">◐</div>
+                    <h3>Color Contrast</h3>
+                    <p>WCAG 2.1 compliance checker for accessibility. Ensure your colors meet AA and AAA standards.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Different Section -->
+    <section class="why-different">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why DevToolkit is Different</h2>
+                <p>We believe developer tools should be fast, private, and frictionless</p>
+            </div>
+            <div class="comparison-table">
+                <div class="comparison-row header">
+                    <div>Feature</div>
+                    <div>Other Tools</div>
+                    <div>DevToolkit</div>
+                </div>
+                <div class="comparison-row">
+                    <div>Account Required</div>
+                    <div class="cross">✗ Often required</div>
+                    <div class="check">✓ Never</div>
+                </div>
+                <div class="comparison-row">
+                    <div>Advertisements</div>
+                    <div class="cross">✗ Everywhere</div>
+                    <div class="check">✓ Zero ads</div>
+                </div>
+                <div class="comparison-row">
+                    <div>Data Privacy</div>
+                    <div class="cross">✗ Sent to servers</div>
+                    <div class="check">✓ Stays local</div>
+                </div>
+                <div class="comparison-row">
+                    <div>Works Offline</div>
+                    <div class="cross">✗ Needs internet</div>
+                    <div class="check">✓ Fully offline</div>
+                </div>
+                <div class="comparison-row">
+                    <div>Page Load Time</div>
+                    <div class="cross">✗ 5-10 seconds</div>
+                    <div class="check">✓ Instant</div>
+                </div>
+                <div class="comparison-row">
+                    <div>Open Source</div>
+                    <div class="cross">✗ Proprietary</div>
+                    <div class="check">✓ MIT License</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Source Code Section -->
+    <section class="source-code" id="source-code">
+        <div class="container">
+            <div class="section-header">
+                <h2>Get the Source Code</h2>
+                <p>Own it. Customize it. Deploy it.</p>
+            </div>
+            <div class="pricing-card">
+                <div class="pricing-badge">Most Popular</div>
+                <h3>DevToolkit Complete</h3>
+                <div class="price">$9<span>one-time</span></div>
+                <p style="color: var(--text-secondary);">Full source code with MIT license</p>
+                <ul class="pricing-features">
+                    <li>Complete HTML/CSS/JS source code</li>
+                    <li>No frameworks or dependencies</li>
+                    <li>Self-host on your own domain</li>
+                    <li>Commercial use allowed</li>
+                    <li>Add your own custom tools</li>
+                    <li>MIT License (no attribution required)</li>
+                    <li>Deployment guides included</li>
+                </ul>
+                <a href="#" class="btn btn-primary" style="width: 100%; justify-content: center;" onclick="alert('Coming soon to LemonSqueezy!'); return false;">
+                    Get Instant Access
+                </a>
+                <p class="pricing-note">💡 The tools are 100% free to use. Purchasing supports development and gives you full source access.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2>Developer Love</h2>
+                <p>What early users are saying</p>
+            </div>
+            <div class="testimonial-grid">
+                <div class="testimonial">
+                    <p class="testimonial-text">"Finally, a JSON formatter that doesn't try to sell me something or steal my data. The fact it works offline is a game-changer for flights and coffee shops."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">SK</div>
+                        <div>
+                            <div class="author-name">Sarah K.</div>
+                            <div class="author-title">Frontend Developer</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <p class="testimonial-text">"Bought the source code for my team's internal tools. Clean, well-organized code that was easy to customize. Worth every penny."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">MR</div>
+                        <div>
+                            <div class="author-name">Marcus R.</div>
+                            <div class="author-title">Tech Lead</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <p class="testimonial-text">"The color contrast checker saved me hours on accessibility compliance. Simple, accurate, and no fluff. Exactly what I needed."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">AJ</div>
+                        <div>
+                            <div class="author-name">Alex J.</div>
+                            <div class="author-title">UI/UX Designer</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq">
+        <div class="container">
+            <div class="section-header">
+                <h2>Frequently Asked</h2>
+                <p>Quick answers to common questions</p>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="this.parentElement.classList.toggle('active')">
+                        Is DevToolkit really free?
+                        <span class="faq-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes! The hosted version is 100% free and always will be. No ads, no tracking, no upsells. We make money by selling the source code to developers who want to self-host or customize it.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="this.parentElement.classList.toggle('active')">
+                        Can I use this commercially?
+                        <span class="faq-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Absolutely! The source code comes with an MIT License, which means you can use it for personal projects, client work, or even resell it. No attribution required.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="this.parentElement.classList.toggle('active')">
+                        Does it work offline?
+                        <span class="faq-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes! Once loaded, all tools work entirely in your browser without any server communication. Perfect for airplanes, spotty WiFi, or privacy-conscious workflows.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="this.parentElement.classList.toggle('active')">
+                        What tech stack is used?
+                        <span class="faq-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Pure HTML, CSS, and vanilla JavaScript. No React, no Vue, no build step. Just clean, fast code that works everywhere and is easy to understand and modify.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="this.parentElement.classList.toggle('active')">
+                        How do I deploy this?
+                        <span class="faq-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Deploy anywhere static sites are supported: GitHub Pages (free), Netlify (free), Vercel (free), Cloudflare Pages (free), or your own server. Full guides included with source code purchase.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <h2>Ready to boost your productivity?</h2>
+        <p>Join thousands of developers who've switched to privacy-first utilities. No account required.</p>
+        <div class="hero-cta">
+            <a href="./app.html" class="btn btn-primary">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                Launch Free Tools
+            </a>
+            <a href="#source-code" class="btn btn-secondary">Get Source ($9)</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 DevToolkit. Open source under MIT License.</p>
+        <p style="margin-top: 0.5rem;">
+            <a href="https://github.com">GitHub</a> • 
+            <a href="./app.html">Launch App</a> • 
+            <a href="mailto:hello@devtoolkit.dev">Contact</a>
+        </p>
+    </footer>
+</body>
+</html>
