@@ -2,8 +2,8 @@
 
 A sleek, fast, and completely free suite of essential developer tools. No ads, no tracking, no accounts required.
 
-**🌐 Live Demo:** [Open DevToolkit](https://yourusername.github.io/devtoolkit)  
-**💰 Get Source:** [$9 - Instant Access](https://yourusername.lemonsqueezy.com)  
+**🌐 Live Demo:** [Open DevToolkit](https://orlowski-ra.github.io/devtoolkit/)  
+**💰 Get Source:** [$9 - Instant Access](https://payhip.com/buy?link=devtoolkit)  
 **📄 License:** MIT (Commercial use allowed)
 
 ![DevToolkit Screenshot](screenshot.png)
@@ -59,7 +59,7 @@ A sleek, fast, and completely free suite of essential developer tools. No ads, n
 
 ### Local Development
 ```bash
-git clone https://github.com/yourusername/devtoolkit.git
+git clone https://github.com/orlowski-ra/devtoolkit.git
 cd devtoolkit
 # Open index.html in your browser
 # Or serve with any static server:
@@ -121,3 +121,8 @@ If you find this tool useful, consider supporting its development:
 ---
 
 **Made with ❤️ for developers**
+
+---
+
+**🚀 Live Site:** https://orlowski-ra.github.io/devtoolkit/  
+**⭐ GitHub:** https://github.com/orlowski-ra/devtoolkit
